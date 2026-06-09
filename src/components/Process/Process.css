@@ -1,0 +1,253 @@
+.process-pin-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--bg-color);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+}
+
+.process-scroll-container {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  will-change: transform;
+}
+
+.process-slide {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  padding: 0 5rem;
+}
+
+/* Intro Slide Styles */
+.intro-slide {
+  width: 600px;
+  background-color: var(--bg-color);
+}
+
+.slide-content {
+  display: flex;
+  flex-direction: column;
+  max-width: 460px;
+}
+
+.process-lbl {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.process-main-title {
+  font-family: var(--font-serif);
+  font-size: 4rem;
+  line-height: 1;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  letter-spacing: -0.01em;
+}
+
+.process-intro-p {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+}
+
+.scroll-arrow-hint {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--text-color);
+}
+
+.scroll-arrow-hint .arrow {
+  animation: bounceRight 1.5s infinite;
+}
+
+/* Step Slide Styles */
+.step-slide {
+  width: 550px;
+}
+
+.slide-border-line {
+  position: absolute;
+  left: 0;
+  top: 15%;
+  width: 1px;
+  height: 70%;
+  background-color: var(--border-color);
+}
+
+.slide-inner-content {
+  display: flex;
+  flex-direction: column;
+  max-width: 440px;
+}
+
+.slide-step-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.slide-step-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-color);
+  background: rgba(240, 106, 95, 0.05);
+  border: 1px solid rgba(240, 106, 95, 0.2);
+  border-radius: 10px;
+  width: 52px;
+  height: 52px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.step-slide:hover .slide-step-icon-wrapper {
+  background: rgba(240, 106, 95, 0.12);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 20px rgba(240, 106, 95, 0.25);
+  transform: translateY(-3px) scale(1.05);
+}
+
+.slide-step-icon {
+  width: 24px;
+  height: 24px;
+  stroke-width: 1.5px;
+}
+
+.slide-step-slash {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--text-light);
+  opacity: 0.5;
+}
+
+.slide-step-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+}
+
+.slide-step-title {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  font-weight: 400;
+  line-height: 1.2;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.02em;
+  color: var(--text-color);
+}
+
+.slide-step-desc {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+}
+
+.slide-step-manifesto {
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.5rem;
+}
+
+.manifesto-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--text-light);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.manifesto-p {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--accent-color);
+}
+
+@keyframes bounceRight {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(6px); }
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+  .intro-slide {
+    width: 500px;
+    padding: 0 3rem;
+  }
+  .step-slide {
+    width: 480px;
+    padding: 0 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .process-pin-section {
+    height: auto;
+    overflow: visible;
+    display: block;
+    padding: 6rem 0;
+  }
+
+  .process-scroll-container {
+    flex-direction: column;
+    height: auto;
+    width: 100%;
+    transform: none !important;
+  }
+
+  .process-slide {
+    width: 100% !important;
+    height: auto;
+    padding: 4rem 1.5rem !important;
+  }
+  
+  .intro-slide {
+    padding-bottom: 2rem !important;
+  }
+
+  .slide-content {
+    max-width: 100%;
+  }
+
+  .process-main-title {
+    font-size: 2.8rem;
+  }
+
+  .slide-inner-content {
+    max-width: 100%;
+  }
+  
+  .slide-border-line {
+    top: 0;
+    left: 1.5rem;
+    width: calc(100% - 3rem);
+    height: 1px;
+  }
+  
+  .scroll-arrow-hint {
+    display: none; /* Scroll hints are irrelevant in vertical stack */
+  }
+}

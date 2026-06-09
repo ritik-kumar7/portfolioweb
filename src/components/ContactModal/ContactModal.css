@@ -1,0 +1,149 @@
+.contact-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: modal-fade-in 0.4s ease forwards;
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.contact-modal-card {
+  width: 100%;
+  max-width: 540px;
+  background: #3a0d0d; /* Warm reddish-dark theme base */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 4px solid var(--accent-color);
+  border-radius: 12px;
+  padding: 3rem;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(240, 106, 95, 0.1);
+  position: relative;
+  overflow: hidden;
+  animation: modal-scale-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  color: #f7f4ee;
+}
+
+@keyframes modal-scale-in {
+  from {
+    transform: scale(0.9) translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.contact-modal-close-btn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  font-size: 2.2rem;
+  line-height: 1;
+  color: rgba(247, 244, 238, 0.6);
+  cursor: pointer;
+  z-index: 5;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-modal-close-btn:hover {
+  color: var(--accent-color);
+  transform: rotate(90deg);
+}
+
+.contact-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+}
+
+.contact-modal-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.contact-modal-lbl {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-color);
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+.contact-modal-title {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  color: #f7f4ee;
+}
+
+.contact-modal-desc {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: rgba(247, 244, 238, 0.6);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.contact-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+/* Modal Input Styles specifically overridden for dark theme */
+.contact-modal-card .contact-text-input,
+.contact-modal-card .contact-textarea-input {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #f7f4ee;
+}
+
+.contact-modal-card .contact-text-input:focus,
+.contact-modal-card .contact-textarea-input:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 15px rgba(240, 106, 95, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.contact-modal-card .contact-text-input::placeholder,
+.contact-modal-card .contact-textarea-input::placeholder {
+  color: rgba(247, 244, 238, 0.4);
+}
+
+.contact-modal-card .form-input-label {
+  color: rgba(247, 244, 238, 0.6);
+}
+
+@media (max-width: 768px) {
+  .contact-modal-card {
+    max-width: 90%;
+    padding: 2rem;
+  }
+
+  .contact-modal-title {
+    font-size: 1.8rem;
+  }
+}

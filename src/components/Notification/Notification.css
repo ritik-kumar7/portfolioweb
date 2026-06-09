@@ -1,0 +1,142 @@
+.notification-toast {
+  position: fixed;
+  top: 40px;
+  right: 40px;
+  z-index: 99999;
+  min-width: 340px;
+  max-width: 420px;
+  background: rgba(26, 25, 24, 0.9);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  padding: 1.2rem;
+  overflow: hidden;
+  animation: notification-slide-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes notification-slide-in {
+  from {
+    transform: translateX(100%) translateY(0);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) translateY(0);
+    opacity: 1;
+  }
+}
+
+.notification-toast.closing {
+  animation: notification-fade-out 0.3s ease forwards;
+}
+
+@keyframes notification-fade-out {
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+.notification-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  position: relative;
+}
+
+.notification-status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+/* Success and Error States */
+.notification-toast.success .notification-status-indicator {
+  background-color: #4caf50;
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.6);
+}
+
+.notification-toast.success {
+  border-left: 4px solid #4caf50;
+}
+
+.notification-toast.error .notification-status-indicator {
+  background-color: #e6392e;
+  box-shadow: 0 0 10px rgba(230, 57, 46, 0.6);
+}
+
+.notification-toast.error {
+  border-left: 4px solid #e6392e;
+}
+
+.notification-text-block {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.notification-title {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--text-color);
+  text-transform: uppercase;
+}
+
+.notification-message {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.notification-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--text-light);
+  cursor: pointer;
+  padding: 0 0.25rem;
+  margin-top: -3px;
+  transition: color 0.2s ease;
+}
+
+.notification-close-btn:hover {
+  color: var(--text-color);
+}
+
+/* Progress bar animation */
+.notification-progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: var(--accent-color);
+  width: 100%;
+  animation: notification-progress 4s linear forwards;
+}
+
+@keyframes notification-progress {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+@media (max-width: 768px) {
+  .notification-toast {
+    top: 20px;
+    right: 20px;
+    left: 20px;
+    min-width: 0;
+    max-width: none;
+  }
+}
