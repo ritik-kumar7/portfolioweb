@@ -1,6 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import ai24Video from '../../assets/companyProjectsVideos/ai24_video.mp4';
+import thirdAiVideo from '../../assets/companyProjectsVideos/3rdAi_video.mp4';
+import brahmakoshVideo from '../../assets/companyProjectsVideos/bramhkoash_video.mp4';
+import babaCityVideo from '../../assets/companyProjectsVideos/babaCity.mp4';
+import ambujVideo from '../../assets/companyProjectsVideos/ambujWebstie_vidoe.mp4';
 import './FeaturedWorks.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -12,7 +17,7 @@ const WORKS = [
     role: 'Frontend Architect / UI Engineering',
     year: '2026',
     desc: 'Modern AI-focused business platform designed to showcase digital transformation, AI offerings, and machine learning solutions.',
-    video: '/src/assets/companyProjectsVideos/ai24_video.mp4',
+    video: ai24Video,
     link: 'https://ai24.digital'
   },
   {
@@ -21,7 +26,7 @@ const WORKS = [
     role: 'React.js Developer / API Specialist',
     year: '2025',
     desc: 'Professional surveillance and monitoring solution provider, integrating secure access control systems and enterprise CCTV management.',
-    video: '/src/assets/companyProjectsVideos/3rdAi_video.mp4',
+    video: thirdAiVideo,
     link: 'https://3rdai.co'
   },
   {
@@ -30,7 +35,7 @@ const WORKS = [
     role: 'Full Stack Developer / SEO Strategist',
     year: '2025',
     desc: 'Modern spiritual and Vedic knowledge platform dedicated to Indian culture, ancient wisdom, and interactive article databases.',
-    video: '/src/assets/companyProjectsVideos/bramhkoash_video.mp4',
+    video: brahmakoshVideo,
     link: 'https://brahmakosh.com'
   },
   {
@@ -39,7 +44,7 @@ const WORKS = [
     role: 'UI Designer / Frontend Developer',
     year: '2025',
     desc: 'Luxury hospitality website featuring custom rooms catalog, online booking requests, and high-performance image loading.',
-    video: '/src/assets/companyProjectsVideos/babaCity.mp4',
+    video: babaCityVideo,
     link: 'https://babacityinn.aitota.com'
   },
   {
@@ -48,7 +53,7 @@ const WORKS = [
     role: 'Lead MERN Developer / Security Lead',
     year: '2025',
     desc: 'Corporate business website built to showcase enterprise-level logistics, business operations, and secure inquiry forms.',
-    video: '/src/assets/companyProjectsVideos/ambujWebstie_vidoe.mp4',
+    video: ambujVideo,
     link: 'https://ambujandbrothers.com'
   }
 ];

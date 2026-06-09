@@ -2,6 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import bgImage from '../../assets/brandi-redd-aJTiW00qqtI-unsplash.jpg';
+import showXpress from '../../assets/myProjectImages/show-xpress.png';
+import chatWings from '../../assets/myProjectImages/chatWings.png';
+import codex from '../../assets/myProjectImages/codex.png';
+import videocall from '../../assets/myProjectImages/videocall.png';
+import coolFanta from '../../assets/myProjectImages/coolFanta.png';
 import './PersonalProjects.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -12,7 +17,7 @@ const PROJECTS = [
     title: 'SHOWXPRESS',
     category: 'Full-Stack Web App',
     tech: 'React / Node / MongoDB / Stripe / Clerk',
-    image: '/src/assets/myProjectImages/show-xpress.png',
+    image: showXpress,
     link: 'https://show-xpress7.vercel.app/'
   },
   {
@@ -20,7 +25,7 @@ const PROJECTS = [
     title: 'CHATWINGS',
     category: 'Real-Time AI Chat',
     tech: 'React / Node / MongoDB / Gemini API',
-    image: '/src/assets/myProjectImages/chatWings.png',
+    image: chatWings,
     link: 'https://chatswings.netlify.app/'
   },
   {
@@ -28,7 +33,7 @@ const PROJECTS = [
     title: 'CODEXEYE',
     category: 'AI Code Reviewer',
     tech: 'React / Gemini API / Monaco Editor',
-    image: '/src/assets/myProjectImages/codex.png',
+    image: codex,
     link: 'https://codexeye.netlify.app/'
   },
   {
@@ -36,7 +41,7 @@ const PROJECTS = [
     title: 'VIDBUZZ',
     category: 'Video Conferencing',
     tech: 'React / Tailwind CSS / Zego Cloud',
-    image: '/src/assets/myProjectImages/videocall.png',
+    image: videocall,
     link: 'https://vidbuzz.netlify.app/'
   },
   {
@@ -44,7 +49,7 @@ const PROJECTS = [
     title: 'COOLFANTA',
     category: 'Creative Product Showcase',
     tech: 'React / GSAP / Web Animation',
-    image: '/src/assets/myProjectImages/coolFanta.png',
+    image: coolFanta,
     link: 'https://coolfanta.netlify.app/'
   }
 ];
