@@ -1,7 +1,7 @@
 .custom-cursor-dot {
   width: var(--cursor-size);
   height: var(--cursor-size);
-  background-color: var(--text-color);
+  background-color: var(--accent-color);
   border-radius: 50%;
   position: fixed;
   top: 0;
@@ -13,9 +13,9 @@
 }
 
 .custom-cursor-ring {
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--text-color);
+  width: 44px;
+  height: 44px;
+  border: 1.5px solid var(--text-color);
   border-radius: 50%;
   position: fixed;
   top: 0;
@@ -26,6 +26,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
   transition: 
     width 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
     height 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
