@@ -36,6 +36,17 @@
   margin: 0.8rem 0 1.2rem 0;
   letter-spacing: -0.015em;
   color: var(--text-color);
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  white-space: nowrap;
+  perspective: 500px; /* Perspective context for 3D letter flip */
+}
+
+.narr-title-char {
+  display: inline-block;
+  will-change: transform;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 
 .narrative-center-header .narrative-header-desc {
@@ -70,6 +81,18 @@
   position: relative;
   background-color: rgba(0, 0, 0, 0.2);
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+}
+
+.narrative-curtain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--accent-color);
+  z-index: 2;
+  transform-origin: top center;
+  will-change: transform;
 }
 
 .narrative-gallery-img {

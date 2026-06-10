@@ -42,6 +42,17 @@
   line-height: 1;
   letter-spacing: -0.01em;
   color: var(--text-color);
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  white-space: nowrap;
+  perspective: 500px; /* Perspective for 3D letter flip */
+}
+
+.proj-title-char {
+  display: inline-block;
+  will-change: transform;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 
 .proj-header-desc {
@@ -59,6 +70,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 6rem 5rem;
   align-items: start;
+  perspective: 1500px; /* Add 3D perspective context for card flips */
 }
 
 .project-grid-item {
@@ -66,6 +78,9 @@
   flex-direction: column;
   width: 100%;
   perspective: 1000px; /* Add 3D perspective to grid items */
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
 }
 
 /* Offsetting the right column for architectural look */
@@ -79,16 +94,39 @@
   display: flex;
   flex-direction: column;
   text-decoration: none;
-  background: linear-gradient(135deg, rgba(26, 25, 24, 0.85) 0%, rgba(38, 12, 12, 0.9) 100%);
+  background: rgba(18, 18, 17, 0.45); /* Highly translucent dark grey to let background folds show through */
   border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   padding: 1.5rem;
   border-radius: 16px;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.55), 
-              0 0 30px rgba(240, 106, 95, 0.12);
-  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Double-layer anchor shadow */
+  box-shadow: 
+    0 10px 20px rgba(0, 0, 0, 0.2), 
+    0 4px 6px rgba(0, 0, 0, 0.15);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, background 0.4s ease;
   transform-style: preserve-3d;
+  perspective: 1200px; /* Enable local perspective inside the card */
+  position: relative;
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+
+/* Subtle blueprint tech grid mesh to blend digital and physical layouts */
+.project-card-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.6;
 }
 
 .project-image-frame {
@@ -99,6 +137,9 @@
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background-color: rgba(0, 0, 0, 0.2);
+  z-index: 2; /* Make sure image frame stays above the grid pattern */
+  transform: translateZ(30px); /* 3D layer lift */
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .project-image {
@@ -120,15 +161,23 @@
 
 /* Hover effects with 3D float and red border glow */
 .project-card-link:hover {
-  transform: translateY(-14px) rotateX(2.5deg) rotateY(-2deg) scale(1.01);
-  box-shadow: 0 45px 85px rgba(0, 0, 0, 0.75), 
-              0 0 45px rgba(240, 106, 95, 0.28);
-  border-color: rgba(240, 106, 95, 0.45);
-  background: linear-gradient(135deg, rgba(38, 12, 12, 0.9) 0%, rgba(26, 25, 24, 0.95) 100%);
+  transform: translateY(-16px) rotateX(4.5deg) rotateY(-4.5deg) scale(1.02);
+  /* Massive layered 3D shadows: Close shadow + deep soft shadow + red bounce glow */
+  box-shadow: 
+    0 15px 30px rgba(0, 0, 0, 0.45), 
+    0 50px 100px rgba(0, 0, 0, 0.75), 
+    0 0 50px rgba(240, 106, 95, 0.35);
+  border-color: rgba(240, 106, 95, 0.5);
+  background: rgba(26, 25, 24, 0.65);
 }
 
-.project-card-link:hover .project-image {
-  transform: scale(1.02); /* Reduced scale zoom */
+/* Float the layers higher on hover to create parallax space */
+.project-card-link:hover .project-image-frame {
+  transform: translateZ(60px);
+}
+
+.project-card-link:hover .project-card-details {
+  transform: translateZ(40px);
 }
 
 .project-card-details {
@@ -136,6 +185,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+  z-index: 2; /* Make sure details stay above the grid pattern */
+  transform: translateZ(20px); /* 3D layer lift */
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .project-card-meta {
@@ -199,6 +251,7 @@
   
   .proj-sec-title {
     font-size: 2.5rem;
+    white-space: normal;
   }
 
   .projects-grid {
@@ -209,4 +262,54 @@
   .project-card-title {
     font-size: 1.5rem;
   }
+}
+
+/* GitHub Special Card Styling */
+.github-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  background: radial-gradient(circle at center, rgba(240, 106, 95, 0.08) 0%, rgba(0, 0, 0, 0.3) 70%);
+  border: 1px dashed rgba(240, 106, 95, 0.25);
+  margin-bottom: 0rem;
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(30px); /* 3D layer lift */
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, background 0.4s ease;
+}
+
+.github-card-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(240, 106, 95, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240, 106, 95, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+}
+
+.github-card-icon {
+  color: var(--accent-color);
+  width: 48px;
+  height: 48px;
+  filter: drop-shadow(0 0 6px rgba(240, 106, 95, 0.4));
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.github-special-card:hover .github-card-icon {
+  transform: scale(1.15) rotate(8deg);
+}
+
+.github-special-card:hover .github-card-content {
+  border-color: var(--accent-color);
+  background: radial-gradient(circle at center, rgba(240, 106, 95, 0.18) 0%, rgba(0, 0, 0, 0.4) 75%);
+  transform: translateZ(60px); /* Lift card mesh higher in 3D on hover */
 }

@@ -55,6 +55,12 @@
   letter-spacing: -0.01em;
   color: #f7f4ee;
   text-transform: uppercase;
+  overflow: hidden;
+}
+
+.exp-title-char {
+  display: inline-block;
+  transform-origin: center bottom;
 }
 
 .exp-header-desc {
@@ -148,6 +154,16 @@
 .exp-row:hover .exp-company {
   color: rgba(247, 244, 238, 0.8);
   transform: translateX(8px);
+}
+
+.exp-intern-badge {
+  display: inline-block;
+  color: var(--accent-color);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  font-weight: 600;
+  margin-top: 0.5rem;
 }
 
 .exp-desc {

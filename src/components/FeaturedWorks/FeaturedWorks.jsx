@@ -14,7 +14,7 @@ const WORKS = [
   {
     id: '01',
     title: 'AI24 DIGITAL',
-    role: 'Frontend Architect / UI Engineering',
+    role: 'AI Agency & Digital Solutions Platform',
     year: '2026',
     desc: 'Modern AI-focused business platform designed to showcase digital transformation, AI offerings, and machine learning solutions.',
     video: ai24Video,
@@ -23,7 +23,7 @@ const WORKS = [
   {
     id: '02',
     title: '3RDAI SECURITY',
-    role: 'React.js Developer / API Specialist',
+    role: 'Enterprise Security & CCTV Management System',
     year: '2025',
     desc: 'Professional surveillance and monitoring solution provider, integrating secure access control systems and enterprise CCTV management.',
     video: thirdAiVideo,
@@ -32,7 +32,7 @@ const WORKS = [
   {
     id: '03',
     title: 'BRAMHAKOSH',
-    role: 'Full Stack Developer / SEO Strategist',
+    role: 'Vedic Archive & Cultural Knowledge Portal',
     year: '2025',
     desc: 'Modern spiritual and Vedic knowledge platform dedicated to Indian culture, ancient wisdom, and interactive article databases.',
     video: brahmakoshVideo,
@@ -41,7 +41,7 @@ const WORKS = [
   {
     id: '04',
     title: 'BABA CITY INN',
-    role: 'UI Designer / Frontend Developer',
+    role: 'Luxury Hotel & Booking Management Engine',
     year: '2025',
     desc: 'Luxury hospitality website featuring custom rooms catalog, online booking requests, and high-performance image loading.',
     video: babaCityVideo,
@@ -50,7 +50,7 @@ const WORKS = [
   {
     id: '05',
     title: 'AMBUJ & BROTHERS',
-    role: 'Lead MERN Developer / Security Lead',
+    role: 'Industrial Logistics & Supply Chain Portal',
     year: '2025',
     desc: 'Corporate business website built to showcase enterprise-level logistics, business operations, and secure inquiry forms.',
     video: ambujVideo,
@@ -67,6 +67,7 @@ export default function FeaturedWorks() {
       
       items.forEach((item) => {
         const videoWrapper = item.querySelector('.work-video-wrapper');
+        const mediaCol = item.querySelector('.work-media-col');
         const videoElement = item.querySelector('video');
         const textElements = item.querySelectorAll('.animate-work-text');
 
@@ -81,41 +82,72 @@ export default function FeaturedWorks() {
           onLeaveBack: () => videoElement.pause()
         });
 
-        // Parallax image scale effect on scroll
-        gsap.fromTo(
-          videoElement,
-          { scale: 1.15 },
-          {
-            scale: 1,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: videoWrapper,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: true
-            }
+
+
+        // Unified entrance timeline for media column and text details (zoom & rise from deep below)
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
           }
+        });
+
+        tl.fromTo(
+          mediaCol,
+          { 
+            y: 180, 
+            scale: 0.5, 
+            opacity: 0, 
+            transformOrigin: 'center bottom' 
+          },
+          { 
+            y: 0, 
+            scale: 1, 
+            opacity: 1, 
+            duration: 2.0, 
+            ease: 'back.out(0.8)' 
+          },
+          0
         );
 
-        // Text reveal animations
-        gsap.fromTo(
+        tl.fromTo(
           textElements,
-          { y: 30, opacity: 0 },
+          { 
+            y: 140, 
+            scale: 0.5, 
+            opacity: 0,
+            transformOrigin: 'center bottom'
+          },
           {
             y: 0,
+            scale: 1,
             opacity: 1,
-            duration: 1,
-            stagger: 0.1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: item,
-              start: 'top 75%',
-              end: 'top 30%',
-              toggleActions: 'play none none reverse'
-            }
-          }
+            duration: 1.6,
+            stagger: 0.12,
+            ease: 'back.out(1.0)'
+          },
+          0.3
         );
       });
+
+      // Reveal the "And More" block at the bottom on scroll
+      gsap.fromTo(
+        '.works-more-block',
+        { y: 60, scale: 0.9, opacity: 0 },
+        {
+          y: 0,
+          scale: 1,
+          opacity: 1,
+          duration: 1.4,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.works-more-block',
+            start: 'top 90%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
     }, containerRef);
 
     return () => ctx.revert();
@@ -203,6 +235,17 @@ export default function FeaturedWorks() {
               </div>
             );
           })}
+        </div>
+
+        {/* And More / Archives Minimal Display */}
+        <div className="works-more-block">
+          <div className="more-divider"></div>
+          <div className="more-minimal-display" data-cursor-text="MORE">
+            <span className="ampersand">&</span> MORE
+          </div>
+          <div className="more-subtext-pill">
+            A CURATED FRACTION — <span className="pill-highlight">ADDITIONAL PLATFORMS</span> SUCCESSFULLY DELIVERED
+          </div>
         </div>
 
       </div>

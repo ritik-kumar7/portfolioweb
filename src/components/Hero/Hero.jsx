@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import heroBg from '../../assets/hero/andrew-kliatskyi--e_thdWzgis-unsplash.jpg';
 import heroImg from '../../assets/hero_imageWEb.jpeg';
 import './Hero.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
   const containerRef = useRef(null);
@@ -48,6 +51,28 @@ export default function Hero() {
           delay: 0.8
         }
       );
+
+      // Outro scroll trigger animation (dispersing elements on scroll down)
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        }
+      });
+
+      tl.to('.hero-title-mask', { xPercent: -60, yPercent: -20, opacity: 0, ease: 'none' }, 0)
+        .to('.hero-role-tag', { xPercent: -90, yPercent: -30, opacity: 0, ease: 'none' }, 0)
+        .to('.hero-subtitle-block', { xPercent: -50, yPercent: 50, opacity: 0, ease: 'none' }, 0)
+        .to('.hero-experience-quick', { yPercent: 120, opacity: 0, ease: 'none' }, 0)
+        .to('.monitor-mock-container', { yPercent: 80, xPercent: 15, rotation: -10, scale: 0.75, opacity: 0, ease: 'none' }, 0)
+        .to('.scroll-hint-block', { yPercent: 150, opacity: 0, ease: 'none' }, 0)
+        .to('.hero-footer-bar', { yPercent: 120, opacity: 0, ease: 'none' }, 0)
+        .to('.hero-line-1', { yPercent: -100, opacity: 0, ease: 'none' }, 0)
+        .to('.hero-line-2', { yPercent: 100, opacity: 0, ease: 'none' }, 0)
+        .to('.hero-line-3', { yPercent: -100, opacity: 0, ease: 'none' }, 0)
+        .to('.hero-line-4', { yPercent: 100, opacity: 0, ease: 'none' }, 0);
 
       // Subtle parallax on mouse move
       const handleMouseMove = (e) => {

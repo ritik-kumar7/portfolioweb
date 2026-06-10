@@ -1,9 +1,138 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import SplitType from 'split-type';
 import './ContactForm.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function ContactForm({ showNotification }) {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [submitting, setSubmitting] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    // Split section title into characters for 3D flip-roll
+    const titleSplit = new SplitType('.contact-form-sec-title', {
+      types: 'chars',
+      tagName: 'span',
+      charClass: 'ctf-title-char'
+    });
+
+    const ctx = gsap.context(() => {
+      // Header Animations
+      gsap.fromTo(
+        '.contact-form-sec-num',
+        { scale: 0.8, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 1.0,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.contact-form-header',
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+
+      gsap.fromTo(
+        titleSplit.chars,
+        { 
+          rotationX: -90, 
+          y: '50%', 
+          opacity: 0, 
+          transformOrigin: 'top center' 
+        },
+        {
+          rotationX: 0,
+          y: '0%',
+          opacity: 1,
+          stagger: 0.04,
+          duration: 1.2,
+          ease: 'power4.out',
+          scrollTrigger: {
+            trigger: '.contact-form-sec-title',
+            start: 'top 90%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+
+      gsap.fromTo(
+        '.contact-form-header-desc',
+        { y: 25, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.contact-form-header-desc',
+            start: 'top 90%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+
+      // Columns Entry
+      gsap.fromTo(
+        '.contact-form-info-col',
+        { x: -50, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1.0,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.contact-form-info-col',
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+
+      gsap.fromTo(
+        '.contact-form-card-col',
+        { x: 50, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1.0,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.contact-form-card-col',
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+
+      // Stagger form input fields & button inside card
+      gsap.fromTo(
+        '.form-input-group, .contact-form-submit-btn',
+        { y: 15, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.08,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.actual-contact-form',
+            start: 'top 90%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+    }, sectionRef);
+
+    return () => {
+      ctx.revert();
+      titleSplit.revert();
+    };
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -38,7 +167,7 @@ export default function ContactForm({ showNotification }) {
   };
 
   return (
-    <section id="contact-form-section" className="contact-form-section theme-reddish">
+    <section id="contact-form-section" className="contact-form-section theme-reddish" ref={sectionRef}>
       <div className="container">
 
         {/* Section Header */}

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import SplitType from 'split-type';
 import './Experience.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -15,7 +16,8 @@ const EXPERIENCES = [
   },
   {
     company: 'Digicoder Technology',
-    role: 'MERN Stack Developer Intern',
+    role: 'MERN Stack Developer',
+    isIntern: true,
     period: 'May 2025 — Nov 2025',
     desc: 'Completed rigorous full-stack internship focusing on MERN database schema designs, modular frontend states, Express route security, and team git workflows. Built and deployed multiple functional web projects.',
     skills: ['MongoDB', 'Express.js', 'React.js', 'Node.js', 'JavaScript', 'GitHub', 'CSS3']
@@ -26,21 +28,59 @@ export default function Experience() {
   const sectionRef = useRef(null);
 
   useEffect(() => {
+    // Split the section header title into characters
+    const titleSplit = new SplitType('.exp-sec-title', {
+      types: 'chars',
+      tagName: 'span',
+      charClass: 'exp-title-char'
+    });
+
     const ctx = gsap.context(() => {
-      // Reveal the rows on scroll
+      // Header number and desc animations
       gsap.fromTo(
-        '.exp-row',
-        { y: 40, opacity: 0 },
+        '.exp-sec-num',
+        { scale: 0.8, opacity: 0 },
         {
-          y: 0,
+          scale: 1,
           opacity: 1,
-          duration: 1.2,
-          stagger: 0.15,
+          duration: 1.0,
           ease: 'power3.out',
           scrollTrigger: {
-            trigger: '.exp-table',
-            start: 'top 80%',
-            end: 'bottom 40%',
+            trigger: '.exp-section-header',
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+
+      gsap.fromTo(
+        titleSplit.chars,
+        { y: '100%', opacity: 0 },
+        {
+          y: '0%',
+          opacity: 1,
+          stagger: 0.03,
+          duration: 1.0,
+          ease: 'power4.out',
+          scrollTrigger: {
+            trigger: '.exp-sec-title',
+            start: 'top 90%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+
+      gsap.fromTo(
+        '.exp-header-desc',
+        { x: 30, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.exp-header-desc',
+            start: 'top 90%',
             toggleActions: 'play none none reverse'
           }
         }
@@ -52,18 +92,64 @@ export default function Experience() {
         { scaleX: 0 },
         {
           scaleX: 1,
-          duration: 1.5,
-          stagger: 0.2,
-          ease: 'power2.inOut',
+          duration: 1.6,
+          stagger: 0.15,
+          ease: 'power4.inOut',
           scrollTrigger: {
             trigger: '.exp-table',
-            start: 'top 85%'
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
           }
         }
       );
+
+      // Multi-directional reveal for individual experience rows
+      const rows = gsap.utils.toArray('.exp-row');
+      rows.forEach((row) => {
+        const period = row.querySelector('.exp-period-col');
+        const role = row.querySelector('.exp-role-col');
+        const desc = row.querySelector('.exp-desc-col');
+        const tags = row.querySelectorAll('.exp-tag');
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: row,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
+        });
+
+        tl.fromTo(
+          period,
+          { x: -40, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.9, ease: 'power3.out' },
+          0
+        )
+        .fromTo(
+          role,
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' },
+          0.1
+        )
+        .fromTo(
+          desc,
+          { x: 40, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.9, ease: 'power3.out' },
+          0.2
+        )
+        .fromTo(
+          tags,
+          { scale: 0.6, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.6, stagger: 0.05, ease: 'back.out(1.8)' },
+          0.3
+        );
+      });
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      titleSplit.revert();
+    };
   }, []);
 
   return (
@@ -91,8 +177,16 @@ export default function Experience() {
               </div>
               
               <div className="exp-col exp-role-col">
-                <h3 className="exp-role">{exp.role}</h3>
-                <span className="exp-company">{exp.company}</span>
+                <h3 className="exp-role">{exp.company}</h3>
+                <span className="exp-company">
+                  {exp.role}
+                  {exp.isIntern && (
+                    <>
+                      <br />
+                      <span className="exp-intern-badge">( INTERN )</span>
+                    </>
+                  )}
+                </span>
               </div>
               
               <div className="exp-col exp-desc-col">

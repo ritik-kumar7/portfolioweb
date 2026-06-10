@@ -68,8 +68,20 @@ export default function Introduction() {
         <div className="intro-grid-layout">
           <div className="intro-heading-col">
             <div className="intro-heading">
-              <span className="intro-num">01 /</span>
-              <span className="intro-label">PHILOSOPHY</span>
+              <span className="intro-num">
+                {"01 /".split("").map((char, index) => (
+                  <span key={index} className="heading-char">
+                    {char === " " ? "\u00A0" : char}
+                  </span>
+                ))}
+              </span>
+              <span className="intro-label">
+                {"PHILOSOPHY".split("").map((char, index) => (
+                  <span key={index} className="heading-char">
+                    {char}
+                  </span>
+                ))}
+              </span>
               <div className="intro-heading-line"></div>
             </div>
           </div>
@@ -81,14 +93,26 @@ export default function Introduction() {
             
             <div className="intro-subtext-grid">
               <div className="intro-subtext-item">
-                <span className="subtext-title">THE MEDIUM</span>
+                <span className="subtext-title">
+                  {"THE MEDIUM".split("").map((char, index) => (
+                    <span key={index} className="heading-char">
+                      {char === " " ? "\u00A0" : char}
+                    </span>
+                  ))}
+                </span>
                 <p className="subtext-p">
                   Clean state management, clean database queries, and custom, lightweight UI engines. We avoid frameworks that bloat and design templates that genericize.
                 </p>
               </div>
               
               <div className="intro-subtext-item">
-                <span className="subtext-title">THE AESTHETIC</span>
+                <span className="subtext-title">
+                  {"THE AESTHETIC".split("").map((char, index) => (
+                    <span key={index} className="heading-char">
+                      {char === " " ? "\u00A0" : char}
+                    </span>
+                  ))}
+                </span>
                 <p className="subtext-p">
                   Restraint in color, elegance in typography, and animation that feels physics-based and organic, never distracting.
                 </p>

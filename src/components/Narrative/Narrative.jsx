@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import SplitType from 'split-type';
 import collectionImage1 from '../../assets/webColletion.png';
 import collectionImage2 from '../../assets/webColletion2.png';
 import './Narrative.css';
@@ -10,15 +11,15 @@ gsap.registerPlugin(ScrollTrigger);
 const PRINCIPLES = [
   {
     title: 'THE RENDER SPEED AUDIT',
-    text: 'Our architectural engineering enforces a strict performance-first mandate. Every component, image asset, stylesheet, and API call undergoes comprehensive weight audits. We target sub-500ms initial page responses by implementing server-side caching, aggressive image compression, lightweight DOM trees, and custom bundling. If a page loads slowly, it compromises user trust; we ensure your digital presence rendering remains instantaneous and frictionless.'
+    text: 'My architectural engineering enforces a strict performance-first mandate. Every component, image asset, stylesheet, and API call undergoes comprehensive weight audits. I target sub-500ms initial page responses by implementing server-side caching, aggressive image compression, lightweight DOM trees, and custom bundling. If a page loads slowly, it compromises user trust; I ensure your digital presence rendering remains instantaneous and frictionless.'
   },
   {
     title: 'THE CODE CRAFT INTEGRITY',
-    text: 'We reject automated templating, layouts constructed via page-builders, and generic boilerplate configurations. Each component, grid structure, state transition, and routing mechanism is engineered from the ground up to fit your brand identity. By writing custom, modular React scripts and vanilla CSS styling, we avoid library bloat, ensuring clean codebases that are highly maintainable, type-safe, and scalable.'
+    text: 'I reject automated templating, layouts constructed via page-builders, and generic boilerplate configurations. Each component, grid structure, state transition, and routing mechanism is engineered from the ground up to fit your brand identity. By writing custom, modular React scripts and vanilla CSS styling, I avoid library bloat, ensuring clean codebases that are highly maintainable, type-safe, and scalable.'
   },
   {
     title: 'THE PHYSICS OF MOTION',
-    text: 'Animations are not decorative additions; they are core cognitive guides. We model transitions and hover curves using real-world kinetic properties—mass, friction, inertia, and spring physics. Leveraging GSAP and Framer Motion, we choreograph high-performance interaction layouts that respond organically to user navigation, directing attention to critical CTA pathways and creating an intuitive digital environment.'
+    text: 'Animations are not decorative additions; they are core cognitive guides. I model transition curves using real-world kinetic properties—mass, friction, inertia, and spring physics. Leveraging GSAP and Framer Motion, I choreograph high-performance interaction layouts that respond organically to user navigation, directing attention to critical CTA pathways and creating an intuitive digital environment.'
   }
 ];
 
@@ -27,13 +28,106 @@ export default function Narrative() {
   const galleryRef = useRef(null);
 
   useEffect(() => {
+    // Split section title into characters for 3D flip-roll
+    const titleSplit = new SplitType('.narrative-sec-title', {
+      types: 'chars',
+      tagName: 'span',
+      charClass: 'narr-title-char'
+    });
+
     const ctx = gsap.context(() => {
+      // Header Animations
+      gsap.fromTo(
+        '.narrative-sec-num',
+        { scale: 0.8, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 1.0,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.narrative-center-header',
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+
+      gsap.fromTo(
+        titleSplit.chars,
+        { 
+          rotationX: -90, 
+          y: '50%', 
+          opacity: 0, 
+          transformOrigin: 'top center' 
+        },
+        {
+          rotationX: 0,
+          y: '0%',
+          opacity: 1,
+          stagger: 0.04,
+          duration: 1.2,
+          ease: 'power4.out',
+          scrollTrigger: {
+            trigger: '.narrative-sec-title',
+            start: 'top 90%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+
+      gsap.fromTo(
+        '.narrative-header-desc',
+        { y: 25, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.narrative-header-desc',
+            start: 'top 90%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+
+      // Gallery Curtain & Zoom Reveal on Scroll
+      const galleryItems = gsap.utils.toArray('.narrative-gallery-item');
+      galleryItems.forEach((item) => {
+        const curtain = item.querySelector('.narrative-curtain');
+        const img = item.querySelector('.narrative-gallery-img');
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
+        });
+
+        if (curtain) {
+          tl.fromTo(curtain,
+            { scaleY: 1 },
+            { scaleY: 0, duration: 1.4, ease: 'power4.inOut' }
+          );
+        }
+
+        if (img) {
+          tl.fromTo(img,
+            { scale: 1.3 },
+            { scale: 1.0, duration: 1.5, ease: 'power3.out' },
+            0.1
+          );
+        }
+      });
+
       // Parallax scroll on both images
       gsap.fromTo(
         '.narrative-gallery-img',
-        { yPercent: -5 },
+        { yPercent: -8 },
         {
-          yPercent: 5,
+          yPercent: 8,
           ease: 'none',
           scrollTrigger: {
             trigger: galleryRef.current,
@@ -45,22 +139,35 @@ export default function Narrative() {
       );
 
       // Stagger principle item reveal on scroll
-      gsap.fromTo(
-        '.narrative-detail-col',
-        { y: 30, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.15,
-          ease: 'power2.out',
+      const cols = gsap.utils.toArray('.narrative-detail-col');
+      cols.forEach((col) => {
+        const divider = col.querySelector('.narrative-detail-divider');
+        const title = col.querySelector('.narrative-detail-title');
+        const text = col.querySelector('.narrative-detail-text');
+
+        const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: '.narrative-details-grid',
-            start: 'top 92%',
+            trigger: col,
+            start: 'top 90%',
             toggleActions: 'play none none reverse'
           }
+        });
+
+        // 1. Grow divider line horizontally from center
+        if (divider) {
+          tl.fromTo(divider,
+            { scaleX: 0, transformOrigin: 'center center' },
+            { scaleX: 1, duration: 1.0, ease: 'power3.out' }
+          );
         }
-      );
+
+        // 2. Fade/Slide Up Title & Description
+        tl.fromTo([title, text],
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power3.out' },
+          '-=0.6'
+        );
+      });
     }, sectionRef);
 
     // Refresh ScrollTrigger calculations after images load and render
@@ -70,6 +177,7 @@ export default function Narrative() {
 
     return () => {
       ctx.revert();
+      titleSplit.revert();
       clearTimeout(timer);
     };
   }, []);
@@ -83,7 +191,7 @@ export default function Narrative() {
           <span className="narrative-sec-num">07 /</span>
           <h2 className="narrative-sec-title">THE CONVICTION</h2>
           <p className="narrative-header-desc">
-            A set of non-negotiable architectural mandates that govern our engineering and layout designs.
+            A set of non-negotiable architectural mandates that govern my engineering and layout designs.
           </p>
         </div>
 
@@ -98,6 +206,7 @@ export default function Narrative() {
                 className="narrative-gallery-img"
                 loading="lazy" 
               />
+              <div className="narrative-curtain"></div>
               <div className="narrative-img-overlay"></div>
             </div>
           </div>
@@ -110,6 +219,7 @@ export default function Narrative() {
                 className="narrative-gallery-img"
                 loading="lazy" 
               />
+              <div className="narrative-curtain"></div>
               <div className="narrative-img-overlay"></div>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import SplitType from 'split-type';
 import profileImage from '../../assets/profile.jpg';
 import './About.css';
 
@@ -22,7 +23,70 @@ export default function About() {
   const imageFrameRef = useRef(null);
 
   useEffect(() => {
+    // Split section title into characters for 3D flip-roll
+    const titleSplit = new SplitType('.about-sec-title', {
+      types: 'chars',
+      tagName: 'span',
+      charClass: 'abt-title-char'
+    });
+
     const ctx = gsap.context(() => {
+      // Header Animations
+      gsap.fromTo(
+        '.about-sec-num',
+        { scale: 0.8, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 1.0,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.about-header',
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+
+      gsap.fromTo(
+        titleSplit.chars,
+        { 
+          rotationX: -90, 
+          y: '50%', 
+          opacity: 0, 
+          transformOrigin: 'top center' 
+        },
+        {
+          rotationX: 0,
+          y: '0%',
+          opacity: 1,
+          stagger: 0.04,
+          duration: 1.2,
+          ease: 'power4.out',
+          scrollTrigger: {
+            trigger: '.about-sec-title',
+            start: 'top 90%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+
+      gsap.fromTo(
+        '.about-header-desc',
+        { y: 25, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.about-header-desc',
+            start: 'top 90%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+
       // Scale parallax on the profile image
       gsap.fromTo(
         '.about-profile-img',
@@ -55,6 +119,30 @@ export default function About() {
         }
       );
 
+      // Cascade details blocks (Bio, Objective, Strengths)
+      const detailBlocks = gsap.utils.toArray([
+        '.about-bio-block',
+        '.about-objective-block',
+        '.about-strengths-block'
+      ]);
+
+      detailBlocks.forEach((block) => {
+        gsap.fromTo(block,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.9,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: block,
+              start: 'top 88%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      });
+
       // Stagger strengths list reveal
       gsap.fromTo(
         '.strength-item',
@@ -63,18 +151,21 @@ export default function About() {
           y: 0,
           opacity: 1,
           duration: 0.8,
-          stagger: 0.08,
+          stagger: 0.06,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: '.about-strengths-grid',
-            start: 'top 85%',
+            start: 'top 90%',
             toggleActions: 'play none none reverse'
           }
         }
       );
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      titleSplit.revert();
+    };
   }, []);
 
   return (
@@ -88,7 +179,7 @@ export default function About() {
             <h2 className="about-sec-title">THE BUILDER</h2>
           </div>
           <p className="about-header-desc">
-            A look into the philosophy, background, and core capabilities driving our development process.
+            A look into the philosophy, background, and core capabilities driving my development process.
           </p>
         </div>
 

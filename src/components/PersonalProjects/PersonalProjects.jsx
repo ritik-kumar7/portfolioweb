@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import SplitType from 'split-type';
 import bgImage from '../../assets/brandi-redd-aJTiW00qqtI-unsplash.jpg';
 import showXpress from '../../assets/myProjectImages/show-xpress.png';
 import chatWings from '../../assets/myProjectImages/chatWings.png';
@@ -58,47 +59,127 @@ export default function PersonalProjects() {
   const containerRef = useRef(null);
 
   useEffect(() => {
+    // Split section title into characters for 3D flip-roll
+    const titleSplit = new SplitType('.proj-sec-title', {
+      types: 'chars',
+      tagName: 'span',
+      charClass: 'proj-title-char'
+    });
+
     const ctx = gsap.context(() => {
-      // Reveal project grid blocks on scroll
+      // Header Animations
       gsap.fromTo(
-        '.project-grid-item',
-        { y: 60, opacity: 0 },
+        '.proj-sec-num',
+        { scale: 0.8, opacity: 0 },
         {
-          y: 0,
+          scale: 1,
           opacity: 1,
-          duration: 1.2,
-          stagger: 0.15,
+          duration: 1.0,
           ease: 'power3.out',
           scrollTrigger: {
-            trigger: '.projects-grid',
-            start: 'top 80%',
-            end: 'bottom 20%',
+            trigger: '.proj-section-header',
+            start: 'top 85%',
             toggleActions: 'play none none reverse'
           }
         }
       );
 
-      // Parallax effect on images within their frames
-      const images = gsap.utils.toArray('.project-image');
-      images.forEach((img) => {
-        gsap.fromTo(
-          img,
-          { yPercent: -3 },
+      gsap.fromTo(
+        titleSplit.chars,
+        { 
+          rotationX: -90, 
+          y: '50%', 
+          opacity: 0, 
+          transformOrigin: 'top center' 
+        },
+        {
+          rotationX: 0,
+          y: '0%',
+          opacity: 1,
+          stagger: 0.04,
+          duration: 1.2,
+          ease: 'power4.out',
+          scrollTrigger: {
+            trigger: '.proj-sec-title',
+            start: 'top 90%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+
+      gsap.fromTo(
+        '.proj-header-desc',
+        { x: 30, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.proj-header-desc',
+            start: 'top 90%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+
+      // Smooth Vertical Card Entrance (Prevents backdrop-filter blur rendering lag)
+      const items = gsap.utils.toArray('.project-grid-item');
+      items.forEach((item) => {
+        const img = item.querySelector('.project-image');
+        const details = item.querySelectorAll('.project-card-details > *');
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 88%',
+            toggleActions: 'play none none reverse'
+          }
+        });
+
+        // Snappy vertical translation with gentle scaling
+        tl.fromTo(
+          item,
           {
-            yPercent: 3,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: img.parentElement,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: true
-            }
+            y: 60,
+            scale: 0.95,
+            opacity: 0
+          },
+          {
+            y: 0,
+            scale: 1,
+            opacity: 1,
+            duration: 1.0,
+            ease: 'power3.out'
           }
         );
+
+        // Smooth zoom reduction on image
+        if (img) {
+          tl.fromTo(
+            img,
+            { scale: 1.15 },
+            { scale: 1.0, duration: 1.1, ease: 'power2.out' },
+            0.15
+          );
+        }
+
+        // Details fade-in staggered cascade
+        if (details.length > 0) {
+          tl.fromTo(
+            details,
+            { y: 15, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.7, stagger: 0.06, ease: 'power3.out' },
+            0.25
+          );
+        }
       });
     }, containerRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      titleSplit.revert();
+    };
   }, []);
 
   return (
@@ -162,6 +243,32 @@ export default function PersonalProjects() {
               </div>
             );
           })}
+
+          {/* GitHub "And More" Card */}
+          <div className="project-grid-item grid-standard">
+            <a 
+              href="https://github.com/ritik-kumar7/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="project-card-link github-special-card"
+              data-cursor-text="VISIT"
+            >
+              <div className="github-card-content">
+                <svg viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" className="github-card-icon">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                </svg>
+              </div>
+              
+              <div className="project-card-details">
+                <div className="project-card-meta">
+                  <span className="project-card-num">++</span>
+                  <span className="project-card-cat">GITHUB ARCHIVE</span>
+                </div>
+                <h3 className="project-card-title">AND MORE...</h3>
+                <p className="project-card-tech">Explore 30+ open source builds, libraries, and experimental scripts.</p>
+              </div>
+            </a>
+          </div>
         </div>
 
       </div>

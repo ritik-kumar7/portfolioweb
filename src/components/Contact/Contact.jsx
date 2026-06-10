@@ -75,7 +75,7 @@ export default function Contact() {
   return (
     <section id="contact" className="contact-section theme-reddish" ref={containerRef}>
       <div className="container contact-container">
-        
+
         {/* Large Connect Title */}
         <div className="contact-title-container">
           <h2 className="contact-huge-title">
@@ -100,8 +100,8 @@ export default function Contact() {
         <div className="contact-channels-grid">
           <div className="channel-box">
             <span className="channel-lbl">01 / EMAIL DIRECTLY</span>
-            <a 
-              href="mailto:9ritik.kumar@gmail.com" 
+            <a
+              href="mailto:9ritik.kumar@gmail.com"
               className="channel-link magnetic-link"
               data-cursor-text="MAIL"
             >
@@ -112,9 +112,9 @@ export default function Contact() {
           <div className="channel-box">
             <span className="channel-lbl">02 / NETWORKS</span>
             <div className="networks-flex">
-              <a 
-                href="https://www.linkedin.com/in/ritik-kumar7/" 
-                target="_blank" 
+              <a
+                href="https://www.linkedin.com/in/ritik-kumar7/"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="channel-link magnetic-link"
                 data-cursor-text="LINKEDIN"
@@ -122,9 +122,9 @@ export default function Contact() {
                 LinkedIn
               </a>
               <span className="net-sep">—</span>
-              <a 
-                href="https://github.com/ritik-kumar7/" 
-                target="_blank" 
+              <a
+                href="https://github.com/ritik-kumar7/"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="channel-link magnetic-link"
                 data-cursor-text="GITHUB"
@@ -136,8 +136,8 @@ export default function Contact() {
 
           <div className="channel-box">
             <span className="channel-lbl">03 / CURRICULUM VITAE</span>
-            <a 
-              href="/src/assets/myProjectImages/Ritik_kumar_resume.pdf" 
+            <a
+              href="/src/assets/myProjectImages/Ritik_kumar_resume.pdf"
               download="Ritik_Kumar_Resume.pdf"
               className="channel-link cv-link magnetic-link"
               data-cursor-text="DOWNLOAD"
@@ -161,8 +161,8 @@ export default function Contact() {
 
           <div className="colophon-right">
             <span>POWERED BY React.js, GSAP & Lenis</span>
-            <a 
-              href="#cover" 
+            <a
+              href="#cover"
               className="back-to-top"
               onClick={(e) => {
                 e.preventDefault();

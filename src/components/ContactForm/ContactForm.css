@@ -36,6 +36,17 @@
   line-height: 1;
   letter-spacing: -0.01em;
   color: var(--text-color);
+  overflow: hidden;
+  padding-bottom: 0.15em;
+  white-space: nowrap;
+  perspective: 500px;
+}
+
+.ctf-title-char {
+  display: inline-block;
+  will-change: transform;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 
 .contact-form-header-desc {
@@ -207,6 +218,7 @@
   
   .contact-form-sec-title {
     font-size: 2.8rem;
+    white-space: normal;
   }
 
   .contact-form-grid {

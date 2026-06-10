@@ -29,7 +29,7 @@
 
 .skills-header {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.4fr 0.6fr;
   gap: 4rem;
   border-bottom: 1px solid var(--border-color);
   padding-bottom: 4rem;
@@ -51,10 +51,21 @@
 
 .skills-sec-title {
   font-family: var(--font-serif);
-  font-size: 3.5rem;
+  font-size: 3.2rem;
   line-height: 1;
   letter-spacing: -0.01em;
   color: var(--text-color);
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  white-space: nowrap;
+  perspective: 500px; /* Perspective for 3D letter flip */
+}
+
+.skills-title-char {
+  display: inline-block;
+  will-change: transform;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 
 .skills-header-desc {
@@ -71,6 +82,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
+  perspective: 1200px; /* Enable 3D perspective context for cards */
 }
 
 .skills-block {
@@ -84,6 +96,29 @@
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   z-index: 2;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  overflow: hidden; /* Contain shine element sweep inside rounded border */
+}
+
+/* Light sweep reflection overlay */
+.skills-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
 }
 
 .skills-block:hover {
@@ -121,6 +156,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
+  perspective: 600px; /* Enable perspective for skill pill flips */
 }
 
 .skills-item {
@@ -136,6 +172,9 @@
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 6px;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
 }
 
 .skills-bullet {
@@ -175,6 +214,7 @@
   
   .skills-sec-title {
     font-size: 2.5rem;
+    white-space: normal; /* Allow natural wrapping on mobile devices */
   }
 
   .skills-grid-layout {
