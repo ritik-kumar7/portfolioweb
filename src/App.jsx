@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Analytics } from '@vercel/analytics/react';
 
 // Import Modular Components
 import Loader from './components/Loader/Loader.jsx';
@@ -152,6 +153,7 @@ export default function App() {
           )}
         </div>
       )}
+      <Analytics />
     </>
   );
 }
