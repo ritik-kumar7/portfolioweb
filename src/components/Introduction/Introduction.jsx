@@ -85,12 +85,12 @@ export default function Introduction() {
               <div className="intro-heading-line"></div>
             </div>
           </div>
-          
+
           <div className="intro-content-col">
             <h2 ref={textRef} className="manifesto-text">
-              We believe that digital craftsmanship lies at the intersection of absolute utility and elegant design. A web application is not just a bundle of code, but an architectural space. We curate experiences that flow, load instantly, and leave a lasting impression of luxury and details.
+              I believe that digital craftsmanship lies at the intersection of absolute utility and elegant design. A web application is not just a bundle of code, but an architectural space. We curate experiences that flow, load instantly, and leave a lasting impression of luxury and details.
             </h2>
-            
+
             <div className="intro-subtext-grid">
               <div className="intro-subtext-item">
                 <span className="subtext-title">
@@ -104,7 +104,7 @@ export default function Introduction() {
                   Clean state management, clean database queries, and custom, lightweight UI engines. We avoid frameworks that bloat and design templates that genericize.
                 </p>
               </div>
-              
+
               <div className="intro-subtext-item">
                 <span className="subtext-title">
                   {"THE AESTHETIC".split("").map((char, index) => (
